@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 import axiosInstance from "./axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const Login = () => {
           padding: '10px', 
         },
       });
+      navigate('/dashboard');
       
 
     } catch (error) {

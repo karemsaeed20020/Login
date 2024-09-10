@@ -1,16 +1,19 @@
-import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+// import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import MainLayout from "./components/MainLayout";
+//import MainLayout from "./components/MainLayout";
 import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Route, Routes } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
 
 const App = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  // const { currentUser } = useSelector((state) => state.user);
 
   return (
     <div>
-      {/* ToastContainer should be used directly without additional configuration */}
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -18,17 +21,27 @@ const App = () => {
         closeOnClick
         pauseOnHover
         draggable
-        theme="light" // Optional, you can choose "dark" or "light"
+        theme="light" 
         style={{
-          fontSize: '14px', // Adjust font size
-          padding: '10px',  // Adjust padding
+          fontSize: '14px', 
+          padding: '10px',  
         }}
       />
-      {currentUser ? (
-        <MainLayout /> 
-      ) : (
-        <Login />  
-      )}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              
+                <Dashboard />
+            
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
     </div>
   );
 };
